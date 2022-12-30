@@ -80,6 +80,7 @@ const AuthPanel = ({ client }: AuthPanelProps) => {
         <div className="text-lg font-bold">Supabase Login</div>
         <Auth
           magicLink
+          redirectTo="https://supabasejwt.com/"
           socialLayout={enabledProviders.length > 5 ? "vertical" : "horizontal"}
           supabaseClient={client}
           appearance={{
