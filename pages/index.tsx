@@ -237,8 +237,8 @@ export default function Home() {
       </Head>
 
       <div className="m-10 max-w-lg flex flex-col space-y-6">
-        <h1 className="text-4xl font-bold flex flex-row items-top">
-          <img src="/sb-jwt-no-bg.png" className="h-8 w-auto mt-1 mr-2" />
+        <h1 className="text-3xl font-bold flex flex-row items-top">
+          <img src="/sb-jwt-no-bg.png" className="h-7 w-auto mt-1 mr-2" />
           JWT Generator for Supabase
         </h1>
         <h2 className="text-xl text-green-500">
