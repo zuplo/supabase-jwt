@@ -334,6 +334,13 @@ export default function Home() {
           >
             source and contribute on GitHub
           </a>
+          . Need help?{" "}
+          <a
+            href="https://discord.gg/8QbEjr2MgZ"
+            className="text-pink-500 hover:underline"
+          >
+            Join our Discord Server
+          </a>
           .
         </div>
       </div>
