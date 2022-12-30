@@ -160,7 +160,8 @@ const KEY_STORAGE_KEY = "SB_KEY";
 
 const getCachedItem = (key: string) => {
   // to support NextJS - we won't use localStorage on build
-  if (!window) {
+  if (typeof window === "undefined") {
+    // we're on the server
     return undefined;
   }
   const cached = localStorage.getItem(key);
