@@ -213,95 +213,111 @@ export default function Home() {
   };
 
   return (
-    <div className="m-10 max-w-lg flex flex-col space-y-6">
-      <h1 className="text-4xl font-bold flex flex-row items-top">
-        <img src="/sb-jwt-no-bg.png" className="h-8 w-auto mt-1 mr-2" />
-        Supabase Auth Helper
-      </h1>
-      <h2 className="text-xl text-green-500">
-        <em>&ldquo;because sometimes you just want a JWT token</em>&rdquo;
-      </h2>
-      <div className="text-sm">
-        <div className="flex flex-row items-start rounded-t bg-gray-300 p-3">
-          <ExclamationTriangleIcon className="w-4 h-auto flex-none mt-0.5 mr-1 text-pink-500" />
-          This is a fully client-side application designed to help you quickly
-          get a JWT token for supabase. No data is sent to our servers. Your
-          passwords, keys and JWT tokens are not recorded by us.
-        </div>
-        <div className="rounded-b bg-gray-200 p-4">
-          <div className="text-gray-600 text-xs pb-2">INSTRUCTIONS</div>
-          <ol>
-            <li>
-              1. Enter your Supabase URL and <b>anon</b> key.
-            </li>
-            <li>
-              2. Add{" "}
-              <span
-                className="font-mono text-xs text-green-600"
-                onDoubleClick={(evt) => {
-                  window.getSelection()?.selectAllChildren(evt.target as any);
-                }}
-              >
-                https://supabasejwt.com/
-              </span>{" "}
-              to your redirect domains.
-            </li>
-            <li>3. Choose your providers below and login 👏</li>
-          </ol>
-        </div>
-      </div>
+    <>
+      <Head>
+        <title>JWT Generator for Supabase</title>
+      </Head>
 
-      {!session && (
-        <>
-          <div>
-            <div className="font-bold">
-              Supabase URL{" "}
-              <span className="text-xs text-gray-500 font-light">
-                get from Settings &gt; API
-              </span>
-            </div>
-            <input
-              type="text"
-              className="rounded border-gray-500 border w-full font-mono p-1 text-sm"
-              value={url}
-              onChange={(evt) => setUrl(evt.target.value)}
-            />
+      <div className="m-10 max-w-lg flex flex-col space-y-6">
+        <h1 className="text-4xl font-bold flex flex-row items-top">
+          <img src="/sb-jwt-no-bg.png" className="h-8 w-auto mt-1 mr-2" />
+          JWT Generator for Supabase
+        </h1>
+        <h2 className="text-xl text-green-500">
+          <em>&ldquo;because sometimes you just want a JWT token</em>&rdquo;
+        </h2>
+        <div className="text-sm">
+          <div className="flex flex-row items-start rounded-t bg-gray-300 p-3">
+            <ExclamationTriangleIcon className="w-4 h-auto flex-none mt-0.5 mr-1 text-pink-500" />
+            This is a fully client-side application designed to help you quickly
+            get a JWT token for supabase. No data is sent to our servers. Your
+            passwords, keys and JWT tokens are not recorded by us.
           </div>
-          <div>
-            <div className="font-bold">
-              Anon Key{" "}
-              <span className="text-xs text-gray-500 font-light">
-                not service_role get from Settings &gt; API
-              </span>
-            </div>
-            <input
-              type="text"
-              className="rounded border-gray-400 border w-full font-mono p-1 text-sm"
-              value={key}
-              onChange={(evt) => updateKey(evt.target.value)}
-            />
+          <div className="rounded-b bg-gray-200 p-4">
+            <div className="text-gray-600 text-xs pb-2">INSTRUCTIONS</div>
+            <ol>
+              <li>
+                1. Enter your Supabase URL and <b>anon</b> key.
+              </li>
+              <li>
+                2. Add{" "}
+                <span
+                  className="font-mono text-xs text-green-600"
+                  onDoubleClick={(evt) => {
+                    window.getSelection()?.selectAllChildren(evt.target as any);
+                  }}
+                >
+                  https://supabasejwt.com/
+                </span>{" "}
+                to your redirect domains.
+              </li>
+              <li>3. Choose your providers below and login 👏</li>
+            </ol>
           </div>
-        </>
-      )}
-      {error && (
-        <div className="text-pink-500 flex flex-row items-center">
-          <ExclamationTriangleIcon className="w-4 h-auto mr-1 mt-0.5" />
-          {error}
         </div>
-      )}
-      {supabase &&
-        (session ? (
-          <SessionPanel client={supabase} session={session} />
-        ) : (
-          <AuthPanel client={supabase} />
-        ))}
-      <div className="text-xs text-gray-600 border-t">
-        Provided by the folks at{" "}
-        <a href="https://zuplo.com/" className="text-pink-500 hover:underline">
-          zuplo
-        </a>{" "}
-        - a free, serverless API gateway.{" "}
+
+        {!session && (
+          <>
+            <div>
+              <div className="font-bold">
+                Supabase URL{" "}
+                <span className="text-xs text-gray-500 font-light">
+                  get from Settings &gt; API
+                </span>
+              </div>
+              <input
+                type="text"
+                className="rounded border-gray-500 border w-full font-mono p-1 text-sm"
+                value={url}
+                onChange={(evt) => setUrl(evt.target.value)}
+              />
+            </div>
+            <div>
+              <div className="font-bold">
+                Anon Key{" "}
+                <span className="text-xs text-gray-500 font-light">
+                  not service_role get from Settings &gt; API
+                </span>
+              </div>
+              <input
+                type="text"
+                className="rounded border-gray-400 border w-full font-mono p-1 text-sm"
+                value={key}
+                onChange={(evt) => updateKey(evt.target.value)}
+              />
+            </div>
+          </>
+        )}
+        {error && (
+          <div className="text-pink-500 flex flex-row items-center">
+            <ExclamationTriangleIcon className="w-4 h-auto mr-1 mt-0.5" />
+            {error}
+          </div>
+        )}
+        {supabase &&
+          (session ? (
+            <SessionPanel client={supabase} session={session} />
+          ) : (
+            <AuthPanel client={supabase} />
+          ))}
+        <div className="text-xs text-gray-600 border-t">
+          Provided by the folks at{" "}
+          <a
+            href="https://zuplo.com/"
+            className="text-pink-500 hover:underline"
+          >
+            zuplo
+          </a>{" "}
+          - a free, serverless API gateway. Get the{" "}
+          <a
+            href="https://github.com/zuplo/supabase-jwt"
+            className="text-pink-500 hover:underline"
+          >
+            source and contribute on GitHub
+          </a>
+          .
+        </div>
       </div>
-    </div>
+    </>
   );
 }
