@@ -14,10 +14,6 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-let SUPABASE_URL = "https://rxoqdfbalrhwpvjugcio.supabase.co";
-let SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4b3FkZmJhbHJod3B2anVnY2lvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzIxODc2ODcsImV4cCI6MTk4Nzc2MzY4N30.iySBIxMF8GoJYDgpkoCXVXiAN9uZ2ybf6vv3KbQNiLM";
-
 const providers: Provider[] = [
   "apple",
   "azure",
@@ -159,13 +155,23 @@ const checkForServiceRole = (jwt: string) => {
   }
 };
 
+const URL_STORAGE_KEY = "SB_URL";
+const KEY_STORAGE_KEY = "SB_KEY";
+
+const getCachedItem = (key: string) => {
+  const cached = localStorage.getItem(key);
+  return cached ?? undefined;
+};
+
 export default function Home() {
   const [session, setSession] = useState<Session | null>(null);
   const [error, setError] = useState<string | undefined>();
-  const [url, setUrl] = useState<string>();
-  //"https://rxoqdfbalrhwpvjugcio.supabase.co"
-  const [key, setKey] = useState<string>();
-  //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4b3FkZmJhbHJod3B2anVnY2lvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzIxODc2ODcsImV4cCI6MTk4Nzc2MzY4N30.iySBIxMF8GoJYDgpkoCXVXiAN9uZ2ybf6vv3KbQNiLM"
+  const [url, setUrl] = useState<string | undefined>(
+    getCachedItem(URL_STORAGE_KEY)
+  );
+  const [key, setKey] = useState<string | undefined>(
+    getCachedItem(KEY_STORAGE_KEY)
+  );
 
   const supabase = useMemo(() => {
     if (!key || !url) {
@@ -211,6 +217,12 @@ export default function Home() {
       return;
     }
     setKey(key);
+    localStorage.setItem(KEY_STORAGE_KEY, key);
+  };
+
+  const updateUrl = (url: string) => {
+    setUrl(url);
+    localStorage.setItem(URL_STORAGE_KEY, url);
   };
 
   return (
@@ -232,7 +244,8 @@ export default function Home() {
             <ExclamationTriangleIcon className="w-4 h-auto flex-none mt-0.5 mr-1 text-pink-500" />
             This is a fully client-side application designed to help you quickly
             get a JWT token for supabase. No data is sent to our servers. Your
-            passwords, keys and JWT tokens are not recorded by us.
+            passwords, keys and JWT tokens are not recorded by us. Your public
+            URL and KEY are stored in localStorage on your machine.
           </div>
           <div className="rounded-b bg-gray-200 p-4">
             <div className="text-gray-600 text-xs pb-2">INSTRUCTIONS</div>
@@ -270,7 +283,7 @@ export default function Home() {
                 type="text"
                 className="rounded border-gray-500 border w-full font-mono p-1 text-sm"
                 value={url}
-                onChange={(evt) => setUrl(evt.target.value)}
+                onChange={(evt) => updateUrl(evt.target.value)}
               />
             </div>
             <div>
