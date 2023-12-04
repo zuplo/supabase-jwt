@@ -336,7 +336,7 @@ export default function Home() {
           </a>
           . Need help?{" "}
           <a
-            href="https://discord.gg/8QbEjr2MgZ"
+            href="https://discord.zuplo.com"
             className="text-pink-500 hover:underline"
           >
             Join our Discord Server
