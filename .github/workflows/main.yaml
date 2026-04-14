@@ -30,7 +30,7 @@ jobs:
 
       - run: npm install
         env:
-          GITHUB_NPM_TOKEN: ${{ secrets.GH_NPM_PACKAGE_READ_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ github.token }}
       - run: npx @cloudflare/next-on-pages --experimental-minify
         env:
           NODE_VERSION: 18
